@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">SavingFiles</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="test_internal">Test Internal</string>
+    <string name="test_external">Test External</string>
+</resources>
