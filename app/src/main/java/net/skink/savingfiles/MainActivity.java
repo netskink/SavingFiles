@@ -149,6 +149,9 @@ public class MainActivity extends Activity {
                 e.printStackTrace();
             }
         }
+
+        // Delete file since its just a test
+        context.deleteFile(filename);
     }
 
     /* Check to see if external storage is available for read and write */
@@ -244,7 +247,8 @@ public class MainActivity extends Activity {
             EditText editText = (EditText) findViewById(R.id.editText);
             editText.setText("We read from file: " + strRead);
 
-
+            // Delete the file since its just a demo
+            inFile.delete();
         }
 
 
