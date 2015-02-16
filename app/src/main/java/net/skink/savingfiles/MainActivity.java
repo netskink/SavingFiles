@@ -1,7 +1,6 @@
 package net.skink.savingfiles;
 
 import android.app.Activity;
-import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -12,20 +11,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
 import android.widget.EditText;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintStream;
 
 
@@ -207,17 +205,50 @@ public class MainActivity extends Activity {
                 e.printStackTrace();
             }
         }
+
+        // At this point, you can use a shell to verify the file is written and exists.
+        // click on Terminal in Android Studio
+        // cd to c:/users/davis and run the setenv.bat script to set path to the adk tools
+        // Then use adb shell to get a shell on the emulator or nexus. then navigate to
+        // the directory and then cat the file.
+        // c:\Users\john>setenv.bat
+        // c:\Users\john>adb shell
+        // root@generic_x86:/ # cd /mnt/sdcard/download/TESTY
+        // root@generic_x86:/mnt/sdcard/download/TESTY # cat aTestFile
+        // It should print: A line of text to write to the file.
+
+        if (null != extStorage) {
+            // Write a test file.
+            File inFile = new File(extStorage, "aTestFile");
+            FileReader reader = null;
+            try {
+                reader = new FileReader(inFile);
+            } catch (FileNotFoundException e) {
+                // FileReader fails
+                e.printStackTrace();
+            }
+            BufferedReader in = new BufferedReader(reader);
+            String strRead = "";
+            try {
+                strRead = in.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                in.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            // Set Text
+            EditText editText = (EditText) findViewById(R.id.editText);
+            editText.setText("We read from file: " + strRead);
+
+
+        }
+
+
     }
 
-    // At this point, you can use a shell to verify the file is written and exists.
-    // click on Terminal in Android Studio
-    // cd to c:/users/davis and run the setenv.bat script to set path to the adk tools
-    // Then use adb shell to get a shell on the emulator or nexus. then navigate to
-    // the directory and then cat the file.
-    // c:\Users\john>setenv.bat
-    // c:\Users\john>adb shell
-    // root@generic_x86:/ # cd /mnt/sdcard/download/TESTY
-    // root@generic_x86:/mnt/sdcard/download/TESTY # cat aTestFile
-    // It should print: A line of text to write to the file.
 
 }
